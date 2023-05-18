@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = require('./routes/routes');
 const path = require("path");
+const prisma = require('./prisma/index');
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,16 @@ app.use(express.static(path.join(__dirname, "../dist")));
 app.use(express.static(path.join(__dirname, "../public")));
 
 app.use(express.urlencoded());
+
+
+
+app.use((req, res, next) => {
+    res.on('finish', () => {
+        prisma.$disconnect();
+    });
+    console.log('passou pelo middleware do prisma');
+    next();
+});
 
 app.use(routes);
 
