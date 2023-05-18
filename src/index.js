@@ -10,6 +10,8 @@ const PORT = 3033;
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
 app.use(express.static(path.join(__dirname, "../dist")));
+app.use(express.static(path.join(__dirname, "../public")));
+
 app.use(express.urlencoded());
 
 app.use(routes);
