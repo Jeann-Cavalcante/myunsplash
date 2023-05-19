@@ -2,7 +2,13 @@ const prisma = require("../prisma");
 
 async function getGallery(req, res) {
     try {
-      const gallery = await prisma.gallery.findMany();
+      const galleryMany = await prisma.gallery.findMany();
+      // console.log(gallery);
+      const gallery = [];
+      for (let i = 0; i < galleryMany.length; i += 3) {
+        gallery.push(galleryMany.slice(i, i + 3));
+      }
+      console.log(gallery[0][0]);
       return res.render('index', { gallery });
     } catch (error) {
       
